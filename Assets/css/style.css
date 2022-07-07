@@ -1,0 +1,46 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    /* variables for background colors */
+    --hue-default: #008B8B;
+    --hue-correct: #32CD32;
+    --hue-wrong: #B22222;
+}
+
+body {
+    background-color: var(--hue-default);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+body.correct {
+    background-color: var(--hue-correct);
+}
+
+body.wrong {
+    background-color: var(--hue-wrong);
+}
+
+.container {
+    width: 800px;
+    max-width: 85%;
+    background-color: white;
+    border-radius: 7px;
+    padding: 10px;
+    box-shadow: 0 0 5px 1px;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 7px;
+    margin: 20px 0;
+}
