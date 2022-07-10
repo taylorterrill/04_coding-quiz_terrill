@@ -1,4 +1,5 @@
 var startButton = document.getElementById('start-button');
+var nextButton = document.getElementById('next-button');
 var questionContainer = document.getElementById('question-container');
 var questionElement = document.getElementById('question');
 var answerButtonsElement = document.getElementById('answer-buttons');
@@ -27,21 +28,39 @@ function startQuiz() {
 
 // function to display next question
 function nextQuestion() {
-    showQuestion(shuffledQuestions[questionIndex])
+    resetState();
+    showQuestion(shuffledQuestions[questionIndex]);
 }
 
 function showQuestion(question) {
     questionElement.innerText = question.question
+    question.answers.forEach(answer => {
+        var button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('button');
+        if (answer.correct) {
+            button.dataset.correct = answer.correct
+        };
+        button.addEventListener('click', selectAnswer);
+        answerButtonsElement.appendChild(button);  
+    })
 
 }
 
+// clears buttons when question appears
+function resetState() {
+    nextButton.classList.add('hide');
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    }
+}
+
 //function to pick answer
-function selectAnswer() {
+function selectAnswer(e) {
 
 }
 
 //array for Qs & As objects
-
 var questions = [
     { 
         question: 'Inside which tag do you put JavaScript?',
