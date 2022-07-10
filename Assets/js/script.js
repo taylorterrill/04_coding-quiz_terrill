@@ -11,6 +11,13 @@ var questionIndex;
 // starts quiz when start button is clicked
 startButton.addEventListener('click', startQuiz);
 
+// creates functionality for next question button
+nextButton.addEventListener('click', () => {
+    questionIndex++;
+    nextQuestion();
+})
+
+
 // function to start game
 function startQuiz() {
     // hides start button
@@ -33,7 +40,10 @@ function nextQuestion() {
 }
 
 function showQuestion(question) {
-    questionElement.innerText = question.question
+    // grabs question from objects in questions array
+    questionElement.innerText = question.question;
+
+    // creates new buttons for answers that correspond to the question selected
     question.answers.forEach(answer => {
         var button = document.createElement('button');
         button.innerText = answer.text;
@@ -47,8 +57,9 @@ function showQuestion(question) {
 
 }
 
-// clears buttons when question appears
+// clears default buttons when answer buttons appears
 function resetState() {
+    clearStatusClass(document.body);
     nextButton.classList.add('hide');
     while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
@@ -57,7 +68,34 @@ function resetState() {
 
 //function to pick answer
 function selectAnswer(e) {
+    var selectedButton = e.target;
+    var correct = selectedButton.dataset.correct;
+    setStatusClass(document.body, correct);
+    Array.from(answerButtonsElement.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct)
+    })
+    if (shuffledQuestions.length > questionIndex + 1) {
+        nextButton.classList.remove('hide');
+    } else {
+        //show scoreboard
+    }
+    
+}
 
+//decides if status is correct or wrong
+function setStatusClass (element, correct)  {
+    clearStatusClass(element)
+    if (correct) {
+        element.classList.add('correct')
+    } else {
+        element.classList.add('wrong')
+    }
+}
+
+// clears status
+function clearStatusClass(element) {
+    element.classList.remove('correct')
+    element.classList.remove('wrong')
 }
 
 //array for Qs & As objects
