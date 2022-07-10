@@ -7,16 +7,39 @@ var answerButtonsElement = document.getElementById('answer-buttons');
 var shuffledQuestions;
 var questionIndex;
 
+//array for Qs & As objects
+var questions = [
+    { 
+        question: 'Inside which tag do you put JavaScript?',
+        answers: [
+            { text: '<var>', correct: false },
+            { text: '<script>', correct: true },
+            { text: '<section>', correct: false },
+            { text: '<div>', correct: false },
+        ]
+    },
+    { 
+        question: 'Arrays can be used to hold __________.',
+        answers: [
+            { text: 'objects', correct: false },
+            { text: 'numbers', correct: false },
+            { text: 'booleans', correct: false },
+            { text: 'all of thee above', correct: true },
+        ]
+    },
+    { 
+        question: 'How would you write "Hello World" in an alert box?',
+        answers: [
+            { text: 'console.log("Hello, World")', correct: false },
+            { text: 'alert("Hellow World")', correct: true },
+            { text: 'myFunction("Hello World")', correct: false },
+            { text: '<div id="Alert">Hello World</div>', correct: false },
+        ]
+    }
+]
 
 // starts quiz when start button is clicked
 startButton.addEventListener('click', startQuiz);
-
-// creates functionality for next question button
-nextButton.addEventListener('click', () => {
-    questionIndex++;
-    nextQuestion();
-})
-
 
 // function to start game
 function startQuiz() {
@@ -32,11 +55,25 @@ function startQuiz() {
 
 }
 
-
 // function to display next question
 function nextQuestion() {
     resetState();
     showQuestion(shuffledQuestions[questionIndex]);
+}
+
+// clears default buttons when answer buttons appears
+function resetState() {
+    clearStatusClass(document.body);
+    nextButton.classList.add('hide');
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    }
+}
+
+// clears status
+function clearStatusClass(element) {
+    element.classList.remove('correct')
+    element.classList.remove('wrong')
 }
 
 function showQuestion(question) {
@@ -57,14 +94,17 @@ function showQuestion(question) {
 
 }
 
-// clears default buttons when answer buttons appears
-function resetState() {
-    clearStatusClass(document.body);
-    nextButton.classList.add('hide');
-    while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
-    }
-}
+// creates functionality for next question button
+nextButton.addEventListener('click', () => {
+    questionIndex++;
+    nextQuestion();
+})
+
+
+
+
+
+
 
 //function to pick answer
 function selectAnswer(e) {
@@ -86,28 +126,11 @@ function selectAnswer(e) {
 function setStatusClass (element, correct)  {
     clearStatusClass(element)
     if (correct) {
-        element.classList.add('correct')
+        element.classList.add('correct');
+        // document.getElementById("answer-buttons").disabled = ture;
     } else {
-        element.classList.add('wrong')
+        element.classList.add('wrong');
+        // document.getElementById("answer-buttons").disabled = ture;
     }
 }
 
-// clears status
-function clearStatusClass(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
-}
-
-//array for Qs & As objects
-var questions = [
-    { 
-        question: 'Inside which tag do you put JavaScript?',
-        answers: [
-            { text: '<var>', correct: false },
-            { text: '<script>', correct: true },
-            { text: '<section>', correct: false },
-            { text: '<div>', correct: false },
-        ]
-    }
-
-]
