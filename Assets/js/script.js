@@ -4,7 +4,10 @@ var questionContainer = document.getElementById('question-container');
 var questionElement = document.getElementById('question');
 var answerButtonsElement = document.getElementById('answer-buttons');
 var nameContainer = document.getElementById('name-container')
-var finalScore = document.getElementById('final-score');
+var finalScoreEl = document.getElementById('final-score');
+var submitButton = document.getElementById('submit-button');
+var nameInput = document.getElementById('name-input');
+var scoreboardEl = document.getElementById('scoreboard');
 
 var timerEl = document.getElementById('timer');
 var timeLeft = 100;
@@ -154,14 +157,47 @@ function loseTime() {
 
 function showNameForm() {
     // stop timer - set scoreboard-timer = timeLeft
-    console.log("s")
     resetState();
-    finalScore.innerText = timeLeft;
+    finalScoreEl.innerText = timeLeft;
     questionContainer.classList.add('hide');
     nameContainer.classList.remove('hide');
     // log time left
-
     // show scoreboard
+}
+
+
+// scoreboard functionality
+var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+var MAX_HIGH_SCORES = 5;
+
+submitButton.addEventListener('click', showScoreboard);
+
+function showScoreboard(event) {
+    event.preventDefault();
+    var response = nameInput.value;
+    
+    if (response == '') {
+        alert("Please input name:");
+        return;
+    }
+    
+    // nameContainer.classList.add('hide');
+    renderLastRegistered(response);
+    scoreboardEl.classList.remove('hide');
+}
+
+function renderLastRegistered(response) {
+    var score = {
+        score: timeLeft,
+        userName: response
+    };
+    highScores.push(score);
+
+    highScores.sort( (a,b) => b.score - a.score)
+    highScores.splice(5);
+    console.log(highScores);
+    localStorage.setItem('highScores', JSON.stringify(highScores));
+    // startButton.classList.remove('hide');
 }
 
 
