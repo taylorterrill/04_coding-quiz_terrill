@@ -6,9 +6,7 @@
 :root {
     /* variables for background colors */
     --hue-default: #008B8B;
-    
     --hue-correct: #32CD32;
-    
     --hue-wrong: #B22222;
     
 }
@@ -40,6 +38,12 @@ body.wrong {
     padding: 10px;
     box-shadow: 0 0 5px 1px;
     text-align: center;
+}
+
+.name-form {
+    gap: 7px;
+    margin: 15px 0;
+    margin-top: 20px;
 }
 
 .button-grid {
