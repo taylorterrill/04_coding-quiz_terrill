@@ -156,19 +156,17 @@ function loseTime() {
 
 
 function showNameForm() {
-    // stop timer - set scoreboard-timer = timeLeft
     resetState();
     finalScoreEl.innerText = timeLeft;
     questionContainer.classList.add('hide');
     nameContainer.classList.remove('hide');
-    // log time left
-    // show scoreboard
 }
 
 
 // scoreboard functionality
 var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 var MAX_HIGH_SCORES = 5;
+var restartButton = document.getElementById('restart-container');
 
 submitButton.addEventListener('click', showScoreboard);
 
@@ -181,7 +179,6 @@ function showScoreboard(event) {
         return;
     }
     
-    // nameContainer.classList.add('hide');
     renderLastRegistered(response);
     scoreboardEl.classList.remove('hide');
 }
@@ -191,13 +188,20 @@ function renderLastRegistered(response) {
         score: timeLeft,
         userName: response
     };
+    
     highScores.push(score);
-
     highScores.sort( (a,b) => b.score - a.score)
     highScores.splice(5);
-    console.log(highScores);
     localStorage.setItem('highScores', JSON.stringify(highScores));
-    // startButton.classList.remove('hide');
+
+    scoreboardEl.innerHTML = highScores
+        .map(score => {
+            return `<li>${score.score} - ${score.userName}</li>`;
+        }).join("");
+    
+    restartButton.classList.remove('hide');
+    document.getElementById('submit-button').classList.add('hide');
+    // nameContainer.classList.add('hide');
 }
 
 
