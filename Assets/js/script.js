@@ -201,7 +201,6 @@ function renderLastRegistered(response) {
     
     restartButton.classList.remove('hide');
     document.getElementById('submit-button').classList.add('hide');
-    // nameContainer.classList.add('hide');
 }
 
 
